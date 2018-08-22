@@ -1,6 +1,7 @@
 package day2.webscrapprodcon;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.nodes.Document;
@@ -22,13 +23,15 @@ public class DocumentConsumer implements Runnable {
     int totalDivs = 0;
     while (moreDocumentsToConsume) {
       try {
-        doc = null; //TODO: Change this to fetch a new document from the producedDocuments queue or wait if no one is ready
+        doc = producedDocuments.poll(10000, TimeUnit.MILLISECONDS); //TODO: Change this to fetch a new document from the producedDocuments queue or wait if no one is ready
                     //Hint: So far you have no way of knowing when all producers are done. For this part you can use a method that
                     //WAIT, but only for max 10 seconds and if it times out take that as that all Producers are done
         if (doc != null) {
           String title = doc.title();
           Elements divs = doc.select("div");
           //TODO Update the totalDivs variable and print title and sum for this document
+          totalDivs += divs.size();
+            System.out.println("Title: " + doc.title() + ", Div: " + divs.size() + ", Total divs: " + totalDivs);
         } else {
           moreDocumentsToConsume = false;
         }
@@ -36,6 +39,11 @@ public class DocumentConsumer implements Runnable {
       } catch (Exception ex) {
         Logger.getLogger(DocumentConsumer.class.getName()).log(Level.SEVERE, null, ex);
       }
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DocumentConsumer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     System.out.println("Sum of all Divs:" + totalDivs);
   }

@@ -1,22 +1,24 @@
-package day2.rndnumberprodcon;
+package day3.futures;
 
+import day3.futures.*;
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import java.util.concurrent.*;
 
 
-public class RandomNumberProducer implements Runnable{
+
+public class RandomNumberProducer implements Callable<Integer>{
 
   public static final int MAX_NUMBERS_TO_PRODUCE = 100;
   public static final int MAX_RANDOM = 100;
 
   ArrayBlockingQueue<Integer> numbersProduced;
 
-  public RandomNumberProducer(ArrayBlockingQueue<Integer> numbersProduced) {
-    this.numbersProduced = numbersProduced;
+  public RandomNumberProducer() {
+    //this.numbersProduced = numbersProduced;
   }
   
-  @Override
+  /*@Override
   public void run() {
     
     //Todo: Produce MAX_NUMBERS_TO_PRODUCE of random numbers between 0 and MAX_RANDOM and
@@ -27,7 +29,7 @@ public class RandomNumberProducer implements Runnable{
     while(keepRunning){
         keepRunning = numbersProduced.offer(rng.nextInt(MAX_RANDOM));
     }
-  }
+  }*/
   
   //By now, you should know how to produce random numbers, but if not, use/run this as a guide
   public static void main(String[] args) {
@@ -37,6 +39,12 @@ public class RandomNumberProducer implements Runnable{
       System.out.println(random);
     }
   }
+
+    @Override
+    public Integer call() throws Exception {
+        
+        return new Random().nextInt(MAX_RANDOM);
+    }
 
   
   

@@ -5,7 +5,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class TagCounter {
+public class TagCounter extends Thread{
   String url;
   String title;
   int h1Count,h2Count, divCount, bodyCount;
@@ -16,7 +16,7 @@ public class TagCounter {
   /*
   Connect to the URL and count the number of h1, h2, div and body Tags
   */
-  public void run(){
+  public void run() {
     Document doc;
     try {
       doc = Jsoup.connect(url).get();
@@ -33,6 +33,7 @@ public class TagCounter {
     } catch (IOException e) {
       System.out.println(e.getMessage());
     }
+    print();
   }
 
   public String getTitle() {
@@ -54,5 +55,9 @@ public class TagCounter {
   public int getBodyCount() {
     return bodyCount;
   }
-  
+  public void print(){
+    System.out.println("Title: "+getTitle());
+    System.out.println("Div's: "+getDivCount());
+    System.out.println("Body's: "+getBodyCount());
+  }
 }

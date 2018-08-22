@@ -1,5 +1,6 @@
-package day2.rndnumberprodcon;
+package day3.futures;
 
+import day3.futures.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;

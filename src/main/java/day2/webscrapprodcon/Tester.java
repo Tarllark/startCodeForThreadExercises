@@ -18,6 +18,8 @@ public class Tester {
     urls.add("http://www.google.com");
     urls.add("http://politiken.dk");
     urls.add("https://cphbusiness.mrooms.net/");
+    urls.add("https://www.youtube.com");
+    urls.add("https://www.reddit.com");
     //TODO: Add some more URL's of your own choice
 
     //Holds the Documents produced by the producers. This is Q2 in the exercise figure

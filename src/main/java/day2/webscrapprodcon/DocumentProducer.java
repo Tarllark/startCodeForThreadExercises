@@ -1,6 +1,7 @@
 package day2.webscrapprodcon;
 
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jsoup.Jsoup;
@@ -23,15 +24,15 @@ public class DocumentProducer implements Runnable {
     boolean moreUrlsToFecth = true;
     while (moreUrlsToFecth) {
       try {
-        String url = null;//TODO: Use the right method on urlsToUse to set this value to either a string (with a url) or null  
-        
-        if (url == null) {
+           String url = urlsToUse.poll(10000, TimeUnit.MILLISECONDS);
+            
+          if (url == null) {
           moreUrlsToFecth = false;
         } else {
 
           doc = Jsoup.connect(url).get(); 
           //TODO Use the right method on producedDocuments to add this doc to the queue
-
+          producedDocuments.put(doc);
         }
       } catch(Exception ex) {
         Logger.getLogger(DocumentProducer.class.getName()).log(Level.SEVERE, null, ex);

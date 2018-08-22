@@ -11,9 +11,13 @@ public class Tester {
       ResourceContainer resources = new ResourceContainer();
       ResourceUser1 t1 = new ResourceUser1(resources);
       ResourceUser2 t2 = new ResourceUser2(resources);
+      DeadlockDetection t3 = new DeadlockDetection();
+      t3.start();
       t1.start();
+      t1.join(); //It fixed the problem...
       t2.start();
-          
+      
+      
       t1.join();
       t2.join();
       
